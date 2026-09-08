@@ -81,12 +81,15 @@
     swaylock
     chromium
     signal-desktop
+    reaper
 
     # niri has no xwayland; niri config spawns this at startup
     xwayland-satellite
 
     # wayland utils
     wl-clipboard
+    cliphist
+    swaybg
     grim
     slurp
     brightnessctl
@@ -102,4 +105,5 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs.firefox.enable = true;
+  programs.steam.enable = true;
 }

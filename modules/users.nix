@@ -5,7 +5,8 @@
     isNormalUser = true;
     description = "Fred";
     # video for brightnessctl, input for some devices
-    extraGroups = [ "wheel" "networkmanager" "video" "input" ];
+    # docker group is root-equivalent
+    extraGroups = [ "wheel" "networkmanager" "video" "input" "docker" ];
     packages = with pkgs; [
       tree
     ];

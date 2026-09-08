@@ -8,6 +8,7 @@
     ./modules/desktop.nix
     ./modules/nvidia.nix
     ./modules/shell.nix
+    ./modules/dev.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

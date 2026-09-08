@@ -11,7 +11,12 @@
     htop
     pciutils
     usbutils
+    fastfetch
+    ffmpeg
+    nmap
+    wireguard-tools
   ];
 
   services.openssh.enable = true;
+  services.netbird.enable = true;
 }
