@@ -1,5 +1,3 @@
-# Command-line environment and system services.
-
 { config, lib, pkgs, ... }:
 
 {
@@ -11,7 +9,7 @@
     ripgrep
     fd
     htop
-    pciutils   # lspci — was missing when identifying the GPUs
+    pciutils
     usbutils
   ];
 

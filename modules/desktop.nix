@@ -1,18 +1,9 @@
-# Graphical session: niri (scrollable-tiling Wayland compositor), audio,
-# fonts, and the handful of programs a bare compositor does not supply.
-
 { config, lib, pkgs, ... }:
 
 {
   programs.niri.enable = true;
 
-  # The niri module already pulls in: polkit, dconf, gnome-keyring,
-  # xdg-desktop-portal-{gnome,gtk}, the systemd user units, and the
-  # wayland-session entry the display manager lists. Don't re-declare those.
-
-  # Login manager. greetd is a minimal daemon; tuigreet is a text greeter that
-  # runs on the TTY, so nothing X11 is dragged in. It lists every session
-  # registered by services.displayManager.sessionPackages, which niri populates.
+  # niri module already brings polkit, dconf, gnome-keyring, portals, session entry
   services.greetd = {
     enable = true;
     settings.default_session = {
@@ -21,8 +12,7 @@
     };
   };
 
-  # tuigreet draws on the TTY greetd hands it; without this the boot log
-  # keeps painting over the greeter.
+  # without Type=idle the boot log paints over the greeter
   systemd.services.greetd.serviceConfig = {
     Type = "idle";
     StandardInput = "tty";
@@ -32,16 +22,15 @@
     TTYVTDisallocate = true;
   };
 
-  # Audio. pipewire replaces pulseaudio; pulse.enable provides the PA API
-  # that most applications still speak.
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
+    # apps that still speak the pulseaudio api
     pulse.enable = true;
   };
 
-  # Lets pipewire and the compositor request realtime priority.
+  # realtime priority for pipewire and the compositor
   security.rtkit.enable = true;
 
   fonts = {
@@ -57,23 +46,46 @@
     };
   };
 
+  # dark mode, one mechanism per toolkit
+
+  # portal reports this over org.freedesktop.appearance; firefox, chromium, electron, gtk4 follow
+  programs.dconf.profiles.user.databases = [
+    {
+      settings."org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        gtk-theme = "Adwaita-dark";
+      };
+    }
+  ];
+
+  # gtk3 predates the portal; /etc/xdg is a default so user config still wins
+  environment.etc."xdg/gtk-3.0/settings.ini".text = ''
+    [Settings]
+    gtk-application-prefer-dark-theme=1
+    gtk-theme-name=Adwaita-dark
+  '';
+
+  # qt ignores the portal without the gnome plugin
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
+
   environment.systemPackages = with pkgs; [
-    # niri ships no terminal, launcher, bar or notification daemon. Without
-    # at least a terminal you get a working compositor and no way to open
-    # anything in it.
+    # niri ships no terminal, launcher, bar or notification daemon
     alacritty
     fuzzel
     waybar
     mako
     swaylock
     chromium
+    signal-desktop
 
-    # niri is built without XWayland; this supplies it as a side process for
-    # X11-only apps. Started from the niri config via spawn-at-startup.
+    # niri has no xwayland; niri config spawns this at startup
     xwayland-satellite
 
-    # Wayland odds and ends: clipboard, screenshots, brightness, volume,
-    # and a GUI file manager for the portal file chooser.
+    # wayland utils
     wl-clipboard
     grim
     slurp
@@ -81,9 +93,12 @@
     playerctl
     pavucontrol
     nautilus
+
+    # gtk3 adwaita-dark theme; gtk4 has dark built in
+    gnome-themes-extra
   ];
 
-  # Make Electron/Chromium apps run natively on Wayland instead of XWayland.
+  # electron and chromium on wayland instead of xwayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs.firefox.enable = true;
