@@ -64,6 +64,9 @@ spawn-at-startup "mako"
 // niri paints only a solid backdrop, an image needs a separate program
 spawn-at-startup "swaybg" "-i" "/home/fred/Pictures/wallpaper.jpg" "-m" "fill"
 
+// keyboard rgb resets to rainbow on power cycle; 24 zones, order r1c1 to r4c6
+spawn-at-startup "openrgb" "--device" "0" "--color" "FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,FF0000,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5,6A9FB5"
+
 // separate watchers, cliphist stores text and images differently
 spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
 spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"

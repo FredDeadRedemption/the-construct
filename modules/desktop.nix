@@ -99,7 +99,12 @@
 
     # gtk3 adwaita-dark theme; gtk4 has dark built in
     gnome-themes-extra
+
+    openrgb
   ];
+
+  # uaccess tag on the keyboard controller, else openrgb needs root
+  services.udev.packages = [ pkgs.openrgb ];
 
   # electron and chromium on wayland instead of xwayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
