@@ -22,6 +22,9 @@
   # connections configured with nmcli or nmtui
   networking.networkmanager.enable = true;
 
+  # devices paired with bluetoothctl
+  hardware.bluetooth.enable = true;
+
   nixpkgs.config.allowUnfree = true;
 
   # never change, pins app data compat and not package versions
