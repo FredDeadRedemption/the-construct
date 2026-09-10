@@ -10,6 +10,10 @@
     cargo
     rust-analyzer
 
+    # cc for rust build scripts and -sys crates
+    gcc
+    pkg-config
+
     python3
 
     kubernetes-helm
