@@ -9,6 +9,7 @@
     ./modules/nvidia.nix
     ./modules/shell.nix
     ./modules/dev.nix
+    ./modules/neovim.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
