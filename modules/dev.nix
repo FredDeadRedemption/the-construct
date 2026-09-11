@@ -5,6 +5,7 @@
 
   environment.systemPackages = with pkgs; [
     vscode
+    github-desktop
 
     rustc
     cargo
