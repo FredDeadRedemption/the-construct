@@ -83,6 +83,11 @@ hotkey-overlay {
     skip-at-startup
 }
 
+window-rule {
+    match app-id="^chromium-browser$"
+    open-maximized true
+}
+
 binds {
     // Mod is Super. Press Mod+Shift+/ for this list in-session.
     Mod+Shift+Slash { show-hotkey-overlay; }
