@@ -7,6 +7,7 @@
     ./modules/users.nix
     ./modules/desktop.nix
     ./modules/nvidia.nix
+    ./modules/displaylink.nix
     ./modules/shell.nix
     ./modules/dev.nix
     ./modules/neovim.nix

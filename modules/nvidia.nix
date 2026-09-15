@@ -18,7 +18,7 @@
     modesetting.enable = true;
 
     powerManagement.enable = true;
-    powerManagement.finegrained = true;
+    powerManagement.finegrained = false;
 
     nvidiaSettings = true;
 
@@ -34,6 +34,9 @@
       nvidiaBusId = "PCI:1:0:0";
     };
   };
+
+  # finegrained=false only drops the param; 0x03 default still picks rtd3 on ampere+ laptops
+  boot.extraModprobeConfig = "options nvidia NVreg_DynamicPowerManagement=0x00";
 
   # external display staying black means it is wired to the dgpu, swap prime for sync.enable
 }
