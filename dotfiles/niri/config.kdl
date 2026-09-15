@@ -30,6 +30,19 @@ output "eDP-1" {
     // mode "2560x1600@165.000"
 }
 
+output "DVI-I-2" {
+    scale 1
+}
+
+output "DVI-I-1" {
+    scale 1
+}
+
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 32
+}
+
 layout {
     gaps 12
     center-focused-column "never"
@@ -92,19 +105,18 @@ binds {
     // Mod is Super. Press Mod+Shift+/ for this list in-session.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Terminal" { spawn "alacritty"; }
-    Mod+D hotkey-overlay-title="Run an application" { spawn "fuzzel"; }
+    Mod+Return hotkey-overlay-title="Terminal" { spawn "alacritty"; }
+    Mod+A hotkey-overlay-title="Run an application" { spawn "fuzzel"; }
     Mod+Alt+L hotkey-overlay-title="Lock the screen" { spawn "swaylock"; }
     // spawn takes no shell, so the pipeline runs under sh
     Mod+V hotkey-overlay-title="Clipboard history" { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
 
     Mod+Q { close-window; }
 
-    // Focus. The scrollable strip runs left/right; windows stack up/down
-    // inside a column.
+    // Focus. Arrows cross workspaces; J/K move within a column.
     Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
+    Mod+Down  { focus-workspace-down; }
+    Mod+Up    { focus-workspace-up; }
     Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
